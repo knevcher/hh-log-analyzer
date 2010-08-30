@@ -1,0 +1,32 @@
+#!/usr/bin/make -f
+
+PROJECT_DIR=$(CURDIR)/var/lib/hh-log-analyzer
+
+build: build-stamp
+build-stamp:
+	dh build
+	touch build-stamp
+
+clean:
+	dh clean
+	rm -f build-stamp
+	rm -f install-stamp
+
+override_dh_auto_test:
+override_dh_auto_build:
+
+	install -m 755 -o root -g root $(CURDIR)/calc_weights_by_urls.sh $(PROJECT_DIR)
+	install -m 755 -o root -g root $(CURDIR)/get_statistics.sh $(PROJECT_DIR)
+
+install-stamp:
+	dh install
+	touch install-stamp
+
+binary-arch: install
+	dh binary-arch
+
+binary-indep: install
+	dh binary-indep
+
+binary: binary-arch binary-indep
+

@@ -1,0 +1,12 @@
+Source: hh-log-analyzer
+Priority: optional
+Maintainer: Knyazev Andrey <knevcher@gmail.com>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.8.3
+Section: devel
+
+Package: hh-log-analyzer
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-daemon, gawk
+Description: Tool for parsing nginx access logs
+
