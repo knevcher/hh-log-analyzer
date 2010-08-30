@@ -1,6 +1,16 @@
 #!/usr/bin/env python
 #coding=utf8
 
+### BEGIN INIT INFO
+# Provides:          hh-log-analyzer
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: starts hh-log-analyzer
+# Description:       starts hh-log-analyzer
+
+
 import sys, os, time
 from daemon import runner
 

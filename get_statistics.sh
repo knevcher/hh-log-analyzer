@@ -2,7 +2,7 @@
 
 set -e
 
-CONF_PATH=/etc/default/log_analyzer #/etc/default
+CONF_PATH=/etc/default/hh-log-analyzer
 
 if [ -f $CONF_PATH ] ; then
 	. $CONF_PATH

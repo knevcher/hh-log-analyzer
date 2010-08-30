@@ -1,2 +1,7 @@
 *.log
 result
+
+debian/hh-log-analyzer*
+debian/files
+build-stamp
+install-stamp

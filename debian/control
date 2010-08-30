@@ -6,7 +6,7 @@ Standards-Version: 3.8.3
 Section: devel
 
 Package: hh-log-analyzer
-Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, python-daemon, gawk
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, python-daemon, python-lockfile (>=0.8), gawk
 Description: Tool for parsing nginx access logs
 

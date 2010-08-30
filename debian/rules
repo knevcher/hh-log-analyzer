@@ -1,6 +1,7 @@
 #!/usr/bin/make -f
 
-PROJECT_DIR=$(CURDIR)/var/lib/hh-log-analyzer
+
+PROJECT_DIR=$(CURDIR)/debian/hh-log-analyzer/var/lib/hh-log-analyzer
 
 build: build-stamp
 build-stamp:
@@ -15,8 +16,13 @@ clean:
 override_dh_auto_test:
 override_dh_auto_build:
 
-	install -m 755 -o root -g root $(CURDIR)/calc_weights_by_urls.sh $(PROJECT_DIR)
-	install -m 755 -o root -g root $(CURDIR)/get_statistics.sh $(PROJECT_DIR)
+install: build install-stamp
+
+#	mkdir -p $(PROJECT_DIR)
+	echo $(DEB_SRCDIR) 11
+
+	install -m 744 -o root -g root $(CURDIR)/calc_weights_by_urls.sh $(PROJECT_DIR)
+	install -m 744 -o root -g root $(CURDIR)/get_statistics.sh $(PROJECT_DIR)
 
 install-stamp:
 	dh install
