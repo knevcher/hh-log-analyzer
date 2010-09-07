@@ -18,9 +18,6 @@ override_dh_auto_build:
 
 install: build install-stamp
 
-#	mkdir -p $(PROJECT_DIR)
-	echo $(DEB_SRCDIR) 11
-
 	install -m 744 -o root -g root $(CURDIR)/calc_weights_by_urls.sh $(PROJECT_DIR)
 	install -m 744 -o root -g root $(CURDIR)/get_statistics.sh $(PROJECT_DIR)
 

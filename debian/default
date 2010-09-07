@@ -1,8 +1,5 @@
 #! /bin/sh
 
-PIDFILE_PATH="/var/run/hh-log-analyzer.pid"
-PARSING_INTERVAL=120  # seconds
 LOG_PATH="/var/log/nginx/access.log"
-STATISTIC_STORAGE_PATH="/var/lib/hh-log-analyzer/result"
 CALC_WEIGHTS_SCRIPT_PATH="/var/lib/hh-log-analyzer/calc_weights_by_urls.sh"
 

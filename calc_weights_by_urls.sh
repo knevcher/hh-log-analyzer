@@ -1,15 +1,20 @@
-gawk -v parsing_interval=$1 '
+gawk -v parsing_interval=$1 -v needle_precedent=$2 '
   BEGIN{
     current_timestamp =  systime()
     starting_timestamp = current_timestamp - parsing_interval
+    request_count = 0
+    min_request_weight = 0
+    max_request_weight = 0
+    first_interval_count = 0
+    second_interval_count = 0
   }
 {
   log_timestamp = $5
 
   if(log_timestamp >= starting_timestamp)
   {
-    split($12, url, "?");
 
+    split($12, url, "?");
 
     is_ids = match(url[1], /\/(([0-9]+)(,|))+/)
     if(is_ids)
@@ -22,38 +27,34 @@ gawk -v parsing_interval=$1 '
     current_url = url[1]
     status = $11
 
-    total_requests_weight += $4;
-    total_requests_counter += 1;
+    current_precedent = substr(status""current_url, 2)
+    if(current_precedent == needle_precedent)
+    {
+      request_count += 1;
 
-    urls_weights[status" - "current_url] += $4;
-    requests_count[status" - "current_url] += 1;
+      if($4 > 2)
+        second_interval_count += 1
+      else if($4 > 1)
+        first_interval_count += 1
 
-    temp_max = $4;
-    if (temp_max > max_request_weight[status" - "current_url]) max_request_weight[status" - "current_url] = temp_max;
+      temp_max = $4;
+      if (temp_max > max_request_weight)
+        max_request_weight = temp_max;
 
-    temp_min = $4;
-    if (min_request_weight[status" - "current_url] == 0) min_request_weight[status" - "current_url] = temp_min;
-    else if( min_request_weight[status" - "current_url] > temp_min) min_request_weight[status" - "current_url] = temp_min;
+      temp_min = $4;
+      if (min_request_weight == 0)
+        min_request_weight = temp_min;
+      else if( min_request_weight > temp_min)
+        min_request_weight = temp_min;
 
-    if(min_log_timestamp == 0)
-      min_log_timestamp = log_timestamp
+      if(min_log_timestamp == 0)
+        min_log_timestamp = log_timestamp
+    }
   }
 }
 END{
-  if(total_requests_counter > 0)
+  if(request_count > 0)
   {
-    print " "
-    print " logs since "strftime("%a %b %d %H:%M:%S %Z %Y", min_log_timestamp)" until "strftime("%a %b %d %H:%M:%S %Z %Y", current_timestamp)
-    print " Total requests counter:"total_requests_counter;
-    print " Total requests weight:"total_requests_weight;
-    for(i in urls_weights)
-    {
-      average_request_weight = (max_request_weight[i] + min_request_weight[2]) / 2;
-      print i ";" requests_count[i] ";" urls_weights[i] ";" min_request_weight[i] ";" max_request_weight[i] ";" ;
-    }
-  }
-  else
-  {
-    print " worked on " strftime("%a %b %d %H:%M:%S %Z %Y", current_timestamp)
+    print  "request_count:"request_count" min_request_weight:"min_request_weight" max_request_weight:"max_request_weight" first_interval_count:"first_interval_count" second_interval_count:"second_interval_count;
   }
 }'
