@@ -1,5 +1,5 @@
 #! /bin/sh
 
-LOG_PATH="/var/log/nginx/access.log"
+LOG_PATH="/var/log/nginx/hh-php-app.access.log"
 CALC_WEIGHTS_SCRIPT_PATH="/var/lib/hh-log-analyzer/calc_weights_by_urls.sh"
 

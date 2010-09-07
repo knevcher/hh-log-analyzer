@@ -1,1 +1,15 @@
+* Настройка Cacti
+  Чтобы получать данные в cacti из скрипта /var/lib/hh-log-analyzer/get_statistics.sh нужно создать Data Input Method с полями:
+  - Input Type: Script/Command
+  - Input String: /home/knevcher/www/hh-log-analyzer/cacti/get_statistics.sh <time> <precedent>
 
+  Скрипт на входе получает параметры:
+  - time - время в секундах, за которое обрабатываются данные, т.е. обрабатываются записи в логах со времени current_time - time до текущего момента
+  - precedent - в формате REQUEST_METHOD/url. Например: PUT/folder
+
+  Данные на выходе:
+  - request_count - количество запросов
+  - min_request_weight - минимальная длительность запроса
+  - max_request_weight - максимальная длительность
+  - first_interval_count - количство запросов длительностью больше 1 секунды
+  - second_interval_count - количство запросов длительностью больше 2 секунды
