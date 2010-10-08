@@ -13,3 +13,12 @@
   - max_request_weight - максимальная длительность
   - first_interval_count - количство запросов длительностью больше 1 секунды
   - second_interval_count - количство запросов длительностью больше 2 секунды
+
+* Конфиг лога для nginx
+Сейчас скрипт парсинга логов настроен на такой формат:
+
+log_format fastcgi_log '$status $bytes_sent '
+'$request_time $upstream_response_time $msec : '
+'$remote_addr - [$time_local] '
+'"$request"';
+
